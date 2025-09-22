@@ -1,0 +1,39 @@
+# Docker deployment scripts for CompanionAI
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.venv/
+ENV/
+.env
+.DS_Store
+.vscode/
+*.log
+.git/
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+dist/
+build/
+*.egg-info/
+.idea/
+
+# Don't copy large model files in basic Docker build
+# (will be downloaded/mounted instead)
+models/*.bin
+models/*.safetensors
+*.model
+
+# Test files
+test_*.py
+*_test.py
+tests/
+
+# Documentation source
+docs/
+*.md
+LICENSE

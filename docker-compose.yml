@@ -1,0 +1,68 @@
+version: '3.8'
+
+services:
+  # Frontend - Streamlit UI
+  frontend:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.frontend
+    ports:
+      - "8501:8501"
+    environment:
+      - BACKEND_URL=http://backend:8000
+    depends_on:
+      - backend
+    volumes:
+      - ./data:/app/data
+    restart: unless-stopped
+
+  # Backend - FastAPI + AI Models
+  backend:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.backend
+    ports:
+      - "8000:8000"
+    environment:
+      - PYTHONPATH=/app
+      - MODEL_CACHE_DIR=/app/models
+    volumes:
+      - ./data:/app/data
+      - ./embeddings:/app/embeddings
+      - ./faiss_index:/app/faiss_index
+      - ./metadata:/app/metadata
+      - ./logs:/app/logs
+      - model_cache:/app/models
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          memory: 4G
+        reservations:
+          memory: 2G
+
+  # Vector Database (if using external)
+  # redis:
+  #   image: redis:7-alpine
+  #   ports:
+  #     - "6379:6379"
+  #   volumes:
+  #     - redis_data:/data
+  #   restart: unless-stopped
+
+  # Monitoring (optional)
+  # prometheus:
+  #   image: prom/prometheus:latest
+  #   ports:
+  #     - "9090:9090"
+  #   volumes:
+  #     - ./docker/prometheus.yml:/etc/prometheus/prometheus.yml
+  #   restart: unless-stopped
+
+volumes:
+  model_cache:
+  # redis_data:
+
+networks:
+  default:
+    name: companion-ai-network

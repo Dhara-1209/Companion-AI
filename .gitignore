@@ -1,0 +1,45 @@
+# CompanionAI - Sensitive files
+.env
+*.env
+.env.local
+.env.production
+api_keys.txt
+keys/
+secrets/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+logs/
+*.log
+
+# Model files (too large for git)
+models/
+*.bin
+*.gguf
+*.safetensors
+
+# Data files
+data_temp/
+temp/
+cache/
