@@ -1,19 +1,18 @@
 version: '3.8'
 
 services:
-  # Frontend - Streamlit UI
+  # Frontend - React UI
   frontend:
     build:
       context: .
       dockerfile: docker/Dockerfile.frontend
     ports:
-      - "8501:8501"
+      - "80:80"
+      - "5173:80"
     environment:
-      - BACKEND_URL=http://backend:8000
+      - VITE_BACKEND_URL=http://backend:8000
     depends_on:
       - backend
-    volumes:
-      - ./data:/app/data
     restart: unless-stopped
 
   # Backend - FastAPI + AI Models

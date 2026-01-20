@@ -43,3 +43,10 @@ models/
 data_temp/
 temp/
 cache/
+
+# Node.js
+node_modules/
+dist/
+build/
+*.lock
+package-lock.json

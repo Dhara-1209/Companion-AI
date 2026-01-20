@@ -8,7 +8,8 @@
 
 [![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.104+-green.svg)](https://fastapi.tiangolo.com/)
-[![Streamlit](https://img.shields.io/badge/Streamlit-1.28+-red.svg)](https://streamlit.io/)
+[![React](https://img.shields.io/badge/React-18+-blue.svg)](https://reactjs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5+-blue.svg)](https://www.typescriptlang.org/)
 [![AI Powered](https://img.shields.io/badge/AI-Powered-orange.svg)](https://github.com/your-username/companion-ai)
 
 ### 🎯 *Making Professional Appliance Troubleshooting Accessible to Everyone*
@@ -42,7 +43,7 @@ An AI-powered assistant that **instantly diagnoses appliance issues** and provid
 git clone https://github.com/your-username/companion-ai.git
 cd companion-ai && ./start_companion_ai.bat
 
-# Access at: http://localhost:8501
+# Access at: http://localhost:5173
 ```
 
 ### 🎥 **Demo Scenarios**
