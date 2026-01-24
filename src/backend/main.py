@@ -31,11 +31,11 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 # Mock classes for core components (replacing unavailable imports)
-class CompanionAI:
-    """Mock CompanionAI class"""
+class HomeBuddy:
+    """Mock HomeBuddy class"""
     def __init__(self):
-        self.name = "CompanionAI"
-        logger.info("Mock CompanionAI initialized")
+        self.name = "HomeBuddy"
+        logger.info("Mock HomeBuddy initialized")
 
 class ApplianceSafetyChecker:
     """Mock ApplianceSafetyChecker class"""
@@ -52,7 +52,7 @@ model_manager = ModelManager()
 
 # FastAPI app with optimized configuration
 app = FastAPI(
-    title="CompanionAI API",
+    title="HomeBuddy API",
     description="High-performance appliance troubleshooting API with safety detection",
     version="2.0.0",
     docs_url="/docs",
@@ -125,7 +125,7 @@ metrics_store = {
 async def root():
     """API is running"""
     return {
-        "message": "Companion AI Backend Running",
+        "message": "HomeBuddy Backend Running",
         "version": "1.0.0",
         "status": "ok",
         "endpoints": {
@@ -141,16 +141,16 @@ async def startup_event():
     """Initialize components on startup"""
     global companion_ai, safety_checker
     
-    logger.info("Initializing CompanionAI components...")
+    logger.info("Initializing HomeBuddy components...")
     
     try:
         # Initialize safety checker (fast)
         safety_checker = ApplianceSafetyChecker()
         logger.info("Safety checker initialized")
         
-        # Initialize companion AI (may take time for model loading)
-        companion_ai = CompanionAI()
-        logger.info("CompanionAI initialized successfully")
+        # Initialize HomeBuddy (may take time for model loading)
+        home_buddy = HomeBuddy()
+        logger.info("HomeBuddy initialized successfully")
         
     except Exception as e:
         logger.error(f"Startup error: {str(e)}")

@@ -66,7 +66,7 @@ def format_assistant_response(content: str) -> str:
 
 # Page configuration
 st.set_page_config(
-    page_title="CompanionAI - Appliance Assistant",
+    page_title="HomeBuddy - Your Smart Home Assistant",
     page_icon="🔧",
     layout="wide",
     initial_sidebar_state="expanded"
@@ -494,7 +494,7 @@ def get_brand_model_suggestions(brand: str) -> List[str]:
     return BRAND_MODEL_SUGGESTIONS.get(brand, [])
 
 def call_api(query: str, brand: str = None, model: str = None) -> Dict[str, Any]:
-    """Call the CompanionAI API"""
+    """Call the HomeBuddy API"""
     try:
         # Use the restructured backend API
         api_url = "http://localhost:8000/answer"
@@ -578,7 +578,7 @@ def main_chat_interface():
     # Modern header
     st.markdown("""
     <div class="main-header">
-        <h1>� CompanionAI - Intelligent Appliance Assistant</h1>
+        <h1>🏠 HomeBuddy - Your Smart Companion for Every Home Appliance</h1>
         <p>AI-powered appliance troubleshooting with safety-first approach</p>
     </div>
     """, unsafe_allow_html=True)

@@ -52,7 +52,7 @@ export function Chat({ userName, onLogout }: ChatProps) {
     {
       id: '1',
       role: 'assistant',
-      content: `Hello ${userName}! 👋 I'm Companion AI, your intelligent appliance troubleshooting assistant. I can help you diagnose problems, provide repair guidance, and ensure safety. 
+      content: `Hello ${userName}! 👋 I'm HomeBuddy, your intelligent appliance troubleshooting assistant. I can help you diagnose problems, provide repair guidance, and ensure safety. 
 
 **New Features:**
 🏠 Track your appliances and maintenance history
@@ -284,7 +284,7 @@ You can scan a QR code from your appliance to load its specific manual and get c
             <Bot className="w-6 h-6 text-white" />
           </div>
           <div>
-            <h1 className="text-xl font-semibold">Companion AI</h1>
+            <h1 className="text-xl font-semibold">HomeBuddy</h1>
             <p className="text-sm text-gray-600">Always here to help</p>
           </div>
         </div>

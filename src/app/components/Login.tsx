@@ -28,7 +28,7 @@ export function Login({ onLogin, onSwitchToSignup }: LoginProps) {
               <Bot className="w-12 h-12 text-white" />
             </div>
           </div>
-          <CardTitle className="text-3xl">Companion AI</CardTitle>
+          <CardTitle className="text-3xl">HomeBuddy</CardTitle>
           <CardDescription className="text-base">
             Welcome back! Sign in to continue your conversation
           </CardDescription>

@@ -1,4 +1,4 @@
-// API Service for CompanionAI Backend
+// API Service for HomeBuddy Backend
 
 const API_BASE_URL = import.meta.env.VITE_BACKEND_URL || 'http://127.0.0.1:8000';
 
@@ -45,7 +45,7 @@ export interface UploadResponse {
   processing_time: number;
 }
 
-class CompanionAIService {
+class HomeBuddyService {
   private baseUrl: string;
 
   constructor(baseUrl: string = API_BASE_URL) {
@@ -64,7 +64,7 @@ class CompanionAIService {
   }
 
   /**
-   * Send a query to the CompanionAI backend
+   * Send a query to the HomeBuddy backend
    */
   async getAnswer(request: QueryRequest): Promise<AnswerResponse> {
     const response = await fetch(`${this.baseUrl}/answer`, {
