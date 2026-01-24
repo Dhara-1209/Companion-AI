@@ -1,0 +1,15 @@
+﻿node_modules/
+dist/
+.env
+.DS_Store
+*.log
+build/
+.venv/
+__pycache__/
+*.pyc
+.idea/
+.vscode/
+.env.local
+embeddings.npy
+ids.npy
+faiss.index
