@@ -109,7 +109,7 @@ class MetricsResponse(BaseModel):
     precision_at_5: float
 
 # Global components
-companion_ai = None
+home_buddy = None
 safety_checker = None
 metrics_store = {
     "queries": [],
@@ -139,7 +139,7 @@ async def root():
 @app.on_event("startup")
 async def startup_event():
     """Initialize components on startup"""
-    global companion_ai, safety_checker
+    global home_buddy, safety_checker
     
     logger.info("Initializing HomeBuddy components...")
     
@@ -155,7 +155,7 @@ async def startup_event():
     except Exception as e:
         logger.error(f"Startup error: {str(e)}")
         # Continue with limited functionality
-        companion_ai = None
+        home_buddy = None
 
 def log_metrics(query: str, response_time: float, search_time: float, llm_time: float, safety_flag: bool):
     """Log performance metrics"""
@@ -195,7 +195,7 @@ async def health_check():
     """Optimized health check"""
     return {
         "status": "healthy",
-        "companion_ai_loaded": companion_ai is not None,
+        "home_buddy_loaded": home_buddy is not None,
         "safety_checker_loaded": safety_checker is not None,
         "timestamp": datetime.now().isoformat(),
         "version": "2.0.0"
@@ -229,10 +229,10 @@ async def get_answer(request: QueryRequest):
         
         # Search phase
         search_start = time.time()
-        if companion_ai:
+        if home_buddy:
             # Get relevant chunks with timing
             chunks = await asyncio.to_thread(
-                companion_ai.search_chunks,
+                home_buddy.search_chunks,
                 enhanced_query if (request.brand and request.model) else request.query,
                 request.k
             )
@@ -241,7 +241,7 @@ async def get_answer(request: QueryRequest):
             # LLM generation phase
             llm_start = time.time()
             result = await asyncio.to_thread(
-                companion_ai.process_query,
+                home_buddy.process_query,
                 request.query,
                 chunks,
                 request.brand,
@@ -396,10 +396,10 @@ async def upload_manual(
 async def process_uploaded_file(file_path: Path):
     """Background task to process uploaded PDF"""
     try:
-        if companion_ai:
+        if home_buddy:
             # Process PDF and add to knowledge base
             chunks_processed = await asyncio.to_thread(
-                companion_ai.process_pdf,
+                home_buddy.process_pdf,
                 str(file_path)
             )
             logger.info(f"Processed {file_path.name}: {chunks_processed} chunks")

@@ -91,7 +91,7 @@ You can scan a QR code from your appliance to load its specific manual and get c
   const checkBackendHealth = async () => {
     try {
       const health = await apiService.healthCheck();
-      if (!health.companion_ai_loaded) {
+      if (!health.home_buddy_loaded) {
         toast.warning('AI model is still loading. Responses may be delayed.');
       }
     } catch (error) {

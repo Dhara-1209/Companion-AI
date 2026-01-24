@@ -32,7 +32,7 @@ export interface QueryRequest {
 
 export interface HealthResponse {
   status: string;
-  companion_ai_loaded: boolean;
+  home_buddy_loaded: boolean;
   safety_checker_loaded: boolean;
   timestamp: string;
   version: string;
@@ -171,7 +171,7 @@ class HomeBuddyService {
 }
 
 // Export a singleton instance
-export const apiService = new CompanionAIService();
+export const apiService = new HomeBuddyService();
 
 // Export the class for custom instances
-export default CompanionAIService;
+export default HomeBuddyService;
