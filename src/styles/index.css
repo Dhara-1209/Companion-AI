@@ -1,3 +1,54 @@
 @import './fonts.css';
 @import './tailwind.css';
 @import './theme.css';
+
+/* CRITICAL: Override ALL borders to use theme colors */
+@layer base {
+  * {
+    outline: none !important;
+    border-color: rgb(229, 231, 235) !important;
+  }
+  
+  *:focus-visible {
+    outline: 2px solid hsl(var(--ring)) !important;
+    outline-offset: 2px !important;
+    border-color: hsl(var(--ring)) !important;
+  }
+}
+
+@layer utilities {
+  /* Force all border utilities to use gray */
+  .border,
+  .border-t,
+  .border-b,
+  .border-l,
+  .border-r,
+  .border-x,
+  .border-y {
+    border-color: rgb(229, 231, 235) !important;
+  }
+  
+  .border-gray-200 {
+    border-color: rgb(229, 231, 235) !important;
+  }
+  
+  .border-gray-300 {
+    border-color: rgb(209, 213, 219) !important;
+  }
+  
+  .border-purple-200 {
+    border-color: rgb(233, 213, 255) !important;
+  }
+  
+  /* Remove any yellow colors */
+  .bg-yellow-50,
+  .bg-yellow-100,
+  .bg-yellow-200,
+  .border-yellow-200,
+  .border-yellow-300,
+  .text-yellow-600 {
+    background-color: transparent !important;
+    border-color: hsl(var(--border)) !important;
+    color: inherit !important;
+  }
+}
