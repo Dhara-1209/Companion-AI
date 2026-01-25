@@ -9,7 +9,7 @@ type Screen = 'login' | 'signup' | 'chat';
 
 export default function App() {
   const [currentScreen, setCurrentScreen] = useState<Screen>('chat');
-  const [userName, setUserName] = useState('John');
+  const [userName, setUserName] = useState('Guest');
 
   const handleLogin = (email: string, password: string) => {
     // Mock authentication

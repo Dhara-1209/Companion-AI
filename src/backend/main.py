@@ -32,16 +32,92 @@ logger = logging.getLogger(__name__)
 
 # Mock classes for core components (replacing unavailable imports)
 class HomeBuddy:
-    """Mock HomeBuddy class"""
+    """HomeBuddy class with fallback responses"""
     def __init__(self):
         self.name = "HomeBuddy"
-        logger.info("Mock HomeBuddy initialized")
+        logger.info("HomeBuddy initialized with fallback system")
+        
+    def search_chunks(self, query: str, k: int = 5):
+        """Mock search that returns empty list"""
+        return []
+    
+    def process_query(self, query: str, chunks: list, brand: str = None, model: str = None):
+        """Process query with rule-based fallback"""
+        query_lower = query.lower()
+        
+        # Common appliance issues and solutions
+        solutions = {
+            "not working": "1. Check power connection and outlet\n2. Verify the appliance is turned on\n3. Check circuit breaker/fuse\n4. Inspect power cord for damage\n5. If problem persists, contact a technician",
+            "noise": "1. Check if appliance is level\n2. Ensure nothing is stuck or loose inside\n3. Verify all parts are properly assembled\n4. Check for worn bearings or belts\n5. Regular maintenance may be needed",
+            "leak": "1. Check all hoses and connections\n2. Inspect door seals/gaskets\n3. Ensure appliance is level\n4. Check drain system for clogs\n5. Replace damaged seals if necessary",
+            "won't drain": "1. Check drain hose for kinks or clogs\n2. Clean drain filter/trap\n3. Verify drain pump is working\n4. Check for blockages in drain line\n5. Ensure proper installation",
+            "won't start": "1. Check power supply and outlet\n2. Ensure door/lid is properly closed\n3. Check for tripped breakers\n4. Verify all safety switches\n5. Check control panel settings",
+            "error code": f"Error codes vary by brand. For {brand or 'your appliance'}:\n1. Note the exact error code\n2. Check the user manual for code meanings\n3. Try resetting the appliance\n4. Common fixes: check water supply, drain system, and door locks\n5. Contact manufacturer support with the code",
+            "smell": "1. Clean the appliance thoroughly\n2. Check for mold or mildew\n3. Run a cleaning cycle\n4. Check for burnt components (electrical smell)\n5. Ensure proper ventilation",
+            "won't heat": "1. Check power supply\n2. Verify heating element\n3. Check thermostat settings\n4. Inspect heating coils for damage\n5. Test thermal fuse"
+        }
+        
+        # Find matching solution
+        answer = None
+        for keyword, solution in solutions.items():
+            if keyword in query_lower:
+                answer = solution
+                break
+        
+        # Default response if no match
+        if not answer:
+            answer = f"""I'm here to help with your appliance issue. Based on your question about "{query}", here are general troubleshooting steps:
+
+1. **Safety First**: Unplug the appliance before any inspection
+2. **Basic Checks**: Verify power supply, connections, and settings
+3. **Clean & Inspect**: Check for blockages, debris, or visible damage
+4. **Reset**: Try unplugging for 5 minutes, then restart
+5. **Manual**: Consult your appliance manual for specific guidance
+
+For specific error codes or complex issues, please provide:
+- Appliance brand and model
+- Exact error code or symptom
+- When the problem started
+
+**Safety Note**: For gas appliances, electrical issues, or if you smell gas, contact a professional immediately."""
+        
+        return {
+            "answer": answer,
+            "sources": [],
+            "confidence_score": 0.75,
+            "safety_flag": "gas" in query_lower or "electrical" in query_lower or "shock" in query_lower,
+            "safety_level": "caution" if any(word in query_lower for word in ["gas", "electrical", "shock", "smoke"]) else "safe",
+            "safety_message": "⚠️ This may require professional assistance for safety reasons." if any(word in query_lower for word in ["gas", "electrical", "shock", "smoke"]) else ""
+        }
 
 class ApplianceSafetyChecker:
-    """Mock ApplianceSafetyChecker class"""
+    """Safety checker with basic hazard detection"""
     def __init__(self):
         self.name = "SafetyChecker"
-        logger.info("Mock ApplianceSafetyChecker initialized")
+        logger.info("ApplianceSafetyChecker initialized")
+    
+    def analyze_safety(self, query: str):
+        """Analyze query for safety hazards"""
+        query_lower = query.lower()
+        
+        # Emergency keywords
+        emergency_keywords = ["gas leak", "gas smell", "smoke", "fire", "burning smell", "sparks", "electric shock"]
+        danger_keywords = ["electrical", "gas", "not turning off", "overheating"]
+        caution_keywords = ["strange noise", "unusual smell", "vibrating", "leaking"]
+        
+        for keyword in emergency_keywords:
+            if keyword in query_lower:
+                return ("emergency", "🚨 EMERGENCY: Turn off appliance immediately and contact professional help!", True)
+        
+        for keyword in danger_keywords:
+            if keyword in query_lower:
+                return ("danger", "⚠️ DANGER: This requires professional attention. Do not attempt DIY repair.", True)
+        
+        for keyword in caution_keywords:
+            if keyword in query_lower:
+                return ("caution", "⚡ CAUTION: Proceed carefully and consider professional help if unsure.", False)
+        
+        return ("safe", "", False)
 
 class ModelManager:
     """Mock ModelManager class"""

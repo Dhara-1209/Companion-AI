@@ -41,7 +41,7 @@ export function Signup({ onSignup, onSwitchToLogin }: SignupProps) {
               <Input
                 id="name"
                 type="text"
-                placeholder="John Doe"
+                placeholder="Enter your name"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 required
