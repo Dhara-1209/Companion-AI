@@ -15,6 +15,15 @@ from pathlib import Path
 import uvicorn
 import asyncio
 from datetime import datetime
+import os
+
+# Import AI models
+try:
+    from models import EmbeddingModel, FAISSRetriever, LLMGenerator
+    MODELS_AVAILABLE = True
+except ImportError:
+    MODELS_AVAILABLE = False
+    logger.warning("Models not available - will use fallback responses")
 
 # Create logs directory
 Path("logs").mkdir(exist_ok=True)
@@ -30,23 +39,77 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-# Mock classes for core components (replacing unavailable imports)
+# AI-Powered HomeBuddy class with model support
 class HomeBuddy:
-    """HomeBuddy class with fallback responses"""
+    """AI-Powered HomeBuddy with model-based responses"""
     def __init__(self):
         self.name = "HomeBuddy"
-        logger.info("HomeBuddy initialized with fallback system")
+        self.embedding_model = None
+        self.retriever = None
+        self.llm_generator = None
+        self.models_loaded = False
         
+        try:
+            # Initialize embedding model
+            logger.info("Initializing embedding model...")
+            self.embedding_model = EmbeddingModel("all-MiniLM-L6-v2")
+            
+            # Initialize retriever (FAISS with chunks)
+            logger.info("Initializing FAISS retriever...")
+            self.retriever = FAISSRetriever(self.embedding_model)
+            
+            # Initialize LLM generator (with OpenAI if API key available)
+            api_key = os.getenv('OPENAI_API_KEY')
+            logger.info("Initializing LLM generator...")
+            self.llm_generator = LLMGenerator(api_key=api_key)
+            
+            self.models_loaded = True
+            logger.info("HomeBuddy initialized successfully with AI models")
+        except Exception as e:
+            logger.warning(f"Error initializing models: {e}. Will use fallback responses.")
+            
     def search_chunks(self, query: str, k: int = 5):
-        """Mock search that returns empty list"""
+        """Search knowledge base using embeddings and FAISS"""
+        if self.retriever and self.retriever.available:
+            try:
+                chunks = self.retriever.retrieve(query, k)
+                logger.info(f"Retrieved {len(chunks)} relevant chunks for query")
+                return chunks
+            except Exception as e:
+                logger.error(f"Error searching chunks: {e}")
+                return []
         return []
     
-    def process_query(self, query: str, chunks: list, brand: str = None, model: str = None):
-        """Process query with comprehensive rule-based responses"""
+    def process_query(self, query: str, chunks: list, brand: str = None, model_name: str = None):
+        """Process query using AI models and chunks"""
         query_lower = query.lower()
         
-        # Comprehensive appliance solutions with detailed steps
-        solutions = {
+        # Try to use LLM with retrieved chunks
+        if self.llm_generator and chunks:
+            try:
+                logger.info(f"Generating answer using LLM with {len(chunks)} chunks")
+                answer = self.llm_generator.generate_answer(
+                    query=query, 
+                    chunks=chunks,
+                    brand=brand,
+                    model=model_name,
+                    max_tokens=1500
+                )
+                
+                return {
+                    "answer": answer,
+                    "sources": [{"filename": chunk.get('source', 'knowledge_base'), 
+                                "relevance_score": chunk.get('relevance_score', 0.5)} 
+                               for chunk in chunks[:3]],
+                    "confidence_score": 0.85 if chunks else 0.7,
+                    "safety_flag": "gas" in query_lower or "electrical" in query_lower or "shock" in query_lower or "fire" in query_lower or "burning" in query_lower,
+                    "safety_level": "caution" if any(word in query_lower for word in ["gas", "electrical", "shock", "smoke", "burning"]) else "safe",
+                    "safety_message": "⚠️ WARNING: This issue may require professional assistance for safety reasons." if any(word in query_lower for word in ["gas", "electrical", "shock", "smoke", "burning"]) else ""
+                }
+            except Exception as e:
+                logger.error(f"Error in LLM generation: {e}. Falling back to rule-based response.")
+        
+        # Fallback to comprehensive rule-based responses
             "not working": """APPLIANCE NOT WORKING - COMPREHENSIVE TROUBLESHOOTING GUIDE
 
 **STEP 1: POWER SUPPLY (Start Here)**
