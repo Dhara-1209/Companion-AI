@@ -2,13 +2,10 @@ import { useState, useRef, useEffect } from 'react';
 import { Button } from '@/app/components/ui/button';
 import { Textarea } from '@/app/components/ui/textarea';
 import { Card } from '@/app/components/ui/card';
-import { QRScanner } from '@/app/components/QRScanner';
 import {
   Send,
   Mic,
   MicOff,
-  QrCode,
-  Image as ImageIcon,
   LogOut,
   Bot,
   User,
@@ -45,10 +42,8 @@ export function Chat({ userName, onLogout }: ChatProps) {
   ]);
   const [inputText, setInputText] = useState('');
   const [isRecording, setIsRecording] = useState(false);
-  const [showQRScanner, setShowQRScanner] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
-  const fileInputRef = useRef<HTMLInputElement>(null);
   const recognitionRef = useRef<any>(null);
 
   const scrollToBottom = () => {
@@ -184,64 +179,7 @@ export function Chat({ userName, onLogout }: ChatProps) {
     recognition.start();
   };
 
-  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
 
-    if (!file.type.startsWith('image/')) {
-      toast.error('Please upload an image file');
-      return;
-    }
-
-    setIsLoading(true);
-    addMessage('user', `📷 Uploaded image: ${file.name}`);
-
-    try {
-      const result = await apiService.uploadFile(file);
-      toast.success(`Image processed: ${result.chunks_processed} chunks extracted`);
-      
-      addMessage(
-        'assistant',
-        `I've analyzed your image "${file.name}". ${result.status}. How can I help you with this image?`
-      );
-    } catch (error) {
-      console.error('Failed to upload image:', error);
-      toast.error('Failed to process image');
-      addMessage(
-        'assistant',
-        `Sorry, I couldn't process the image. Error: ${error instanceof Error ? error.message : 'Unknown error'}`
-      );
-    } finally {
-      setIsLoading(false);
-      e.target.value = '';
-    }
-  };
-
-  const handleQRScan = async (result: string) => {
-    setShowQRScanner(false);
-    addMessage('user', `📱 Scanned QR code: ${result}`);
-    
-    setIsLoading(true);
-    try {
-      const response = await apiService.processQRCode(result);
-      addMessage('assistant', response.answer, {
-        safetyFlag: response.safety_flag,
-        safetyLevel: response.safety_level,
-        safetyMessage: response.safety_message,
-        sources: response.sources,
-        processingTime: response.processing_time,
-      });
-    } catch (error) {
-      console.error('Failed to process QR code:', error);
-      toast.error('Failed to process QR code');
-      addMessage(
-        'assistant',
-        `I detected the content: "${result}". However, I couldn't fully process it. Error: ${error instanceof Error ? error.message : 'Unknown error'}`
-      );
-    } finally {
-      setIsLoading(false);
-    }
-  };
 
   return (
     <div className="h-screen flex flex-col bg-gradient-to-br from-blue-50 to-indigo-100">
@@ -353,31 +291,6 @@ export function Chat({ userName, onLogout }: ChatProps) {
                 </>
               )}
             </Button>
-
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => setShowQRScanner(true)}
-            >
-              <QrCode className="w-4 h-4 mr-2" />
-              Scan QR
-            </Button>
-
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => fileInputRef.current?.click()}
-            >
-              <ImageIcon className="w-4 h-4 mr-2" />
-              Upload Photo
-            </Button>
-            <input
-              ref={fileInputRef}
-              type="file"
-              accept="image/*"
-              className="hidden"
-              onChange={handleImageUpload}
-            />
           </div>
 
           {/* Text Input */}
@@ -411,10 +324,7 @@ export function Chat({ userName, onLogout }: ChatProps) {
         </div>
       </div>
 
-      {/* QR Scanner Modal */}
-      {showQRScanner && (
-        <QRScanner onScan={handleQRScan} onClose={() => setShowQRScanner(false)} />
-      )}
+
     </div>
   );
 }

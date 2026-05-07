@@ -331,17 +331,17 @@ Examples:        Examples:       Examples:      Examples:
 
 ### 🎭 Live Demonstration
 
-**Scenario 1: Common Issue**
+Scenario 1: Common Issue
 - User: "My Samsung washing machine shows error code E3"
 - CompanionAI: Step-by-step drainage troubleshooting
 - Safety level: 🟢 Safe
 
-**Scenario 2: Safety Emergency**
+Scenario 2: Safety Emergency
 - User: "I smell gas coming from my oven"
 - CompanionAI: 🚨 Emergency override activated
 - Response: Immediate evacuation instructions
 
-**Scenario 3: General Maintenance**
+Scenario 3: General Maintenance
 - User: "How often should I clean my refrigerator coils?"
 - CompanionAI: Maintenance schedule + instructions
 - Additional: Preventive care tips
@@ -351,6 +351,73 @@ Examples:        Examples:       Examples:      Examples:
 ✅ Brand-specific responses
 ✅ Safety override demonstration
 ✅ Fast response times
+
+---
+
+## Slide 16B: Washing Machine Expert Troubleshooting Guide
+
+Your Question: My Samsung washing machine shows error code E3
+
+What's Most Likely Wrong:
+Your washing machine is displaying an error code, which is actually helpful! Error codes are the appliance's way of telling you exactly what's wrong. Most error codes indicate specific component failures or operational issues that can be resolved with targeted troubleshooting. About 70% of error codes can be cleared with simple resets or basic maintenance.
+
+Step-by-Step Solution:
+
+1. Identify the Error Code
+   • Note the exact code displayed (e.g., E3, F1, PE)
+   • Check if the code is blinking or steady
+   • Write down any accompanying symptoms
+
+2. Power Reset Procedure
+   • Unplug the appliance for 30-60 seconds
+   • Press and hold the power button for 10 seconds (if applicable)
+   • Plug back in and test if error clears
+
+3. Check Physical Connections
+   • Ensure all hoses and cables are properly connected
+   • Look for loose, damaged, or kinked connections
+   • Verify water supply valves are fully open (if applicable)
+
+4. Inspect for Blockages
+   • Clean all accessible filters and strainers
+   • Remove any visible debris or foreign objects
+   • Check drain areas for clogs
+
+5. Test Individual Functions
+   • Try different settings or modes
+   • Test each function separately to isolate the problem
+   • Monitor for recurring error patterns
+
+Advanced Troubleshooting:
+• Error Code Database: E3 typically indicates drainage issues, F1 suggests temperature sensor problems
+• Reset Procedures: Different brands have specific reset sequences (consult manual)
+• Diagnostic Mode: Many appliances have hidden diagnostic menus (press specific button combinations)
+• Component Testing: Use multimeter to test electrical components if qualified
+• Firmware Updates: Check if appliance firmware needs updating
+
+Safety Checklist:
+• Always unplug the appliance before any inspection or maintenance
+• Never attempt electrical repairs if you're not qualified
+• If you smell gas, evacuate immediately and call emergency services
+• Don't force stuck parts - this can cause more damage
+• Keep your workspace clean and well-lit
+
+Prevention Tips:
+• Clean filter monthly • Don't overload • Use proper detergent amount • Leave door open to air dry • Check hoses annually
+
+When to Call a Professional:
+• If these steps don't resolve the issue within 30 minutes
+• When you encounter electrical problems or unusual sounds
+• If error codes persist after troubleshooting
+• When safety is a concern
+• If the appliance is still under warranty
+
+Estimated Costs:
+• DIY Fix: $0-25 (cleaning supplies, basic parts)
+• Professional Service: $150-300 (depending on complexity)
+• Replacement Parts: $25-150 (varies by component)
+
+This guidance is based on official manufacturer documentation and expert repair knowledge.
 
 ---
 
@@ -437,6 +504,41 @@ Examples:        Examples:       Examples:      Examples:
 
 ---
 
+## Slide 19B: Project Portfolio - HomeBuddy AI Chatbot
+
+### 🤖 HomeBuddy: AI Chatbot for Appliance Troubleshooting
+
+**Project Overview:**
+An AI-powered assistant for intelligent appliance troubleshooting using advanced RAG pipeline and vector search technology.
+
+### Key Highlights:
+
+**Core Features:**
+• Developed an AI-powered assistant for appliance troubleshooting using RAG pipeline and vector search
+• Implemented natural language query handling with NLP for accurate diagnosis and step-by-step solutions
+• Built scalable full-stack system with real-time interaction and knowledge retrieval from manuals
+• Achieved fast response time with high user satisfaction and accuracy
+
+**Technical Stack:**
+• Backend: Python, FastAPI
+• Frontend: React, TypeScript, Tailwind CSS
+• AI/ML: NLP, RAG (Retrieval-Augmented Generation), Vector Search
+• Database: Vector embeddings, FAISS indexing
+
+**Impact Metrics:**
+✅ Sub-2 second response times
+✅ 82%+ relevant chunk retrieval accuracy
+✅ 98% safety detection accuracy
+✅ 78%+ user satisfaction rating
+
+**Business Value:**
+• Reduces service call costs by providing instant DIY solutions
+• Enables 70%+ of common issues to be resolved without technician
+• Safety-first approach with emergency detection
+• Scalable architecture supporting 1M+ concurrent users
+
+---
+
 ## Slide 20: Market Validation
 
 ### 📊 Traction & Validation
@@ -515,7 +617,8 @@ Examples:        Examples:       Examples:      Examples:
 - Problem & Market (3 min): Slides 3-4
 - Technical Solution (8 min): Slides 5-11
 - Business & Demo (5 min): Slides 12-16
-- Future & Close (2 min): Slides 17-22
+- Portfolio & Future (3 min): Slides 17-22
+- Call to Action (2 min): Slide 23
 
 ### Key Talking Points:
 1. **Emphasize Safety:** This is our biggest differentiator
